@@ -18,13 +18,32 @@ Before you begin, ensure you have the following installed:
 - [Node.js](https://nodejs.org/) (v18 or higher recommended)
 - [npm](https://www.npmjs.com/) (comes with Node.js)
 
+## Quick Start
+
+Use this template to create a new project instantly:
+
+```bash
+npx degit maliciousmuffins3/express-app new-project-name
+cd new-project-name
+npm install
+```
+
 ## Getting Started
 
 ### 1. Clone the Repository
 
+If you prefer to clone directly:
+
 ```bash
-git clone <repository-url>
-cd ts-node-template
+git clone https://github.com/maliciousmuffins3/express-app.git
+cd express-app
+```
+
+Or use the template (recommended):
+
+```bash
+npx degit maliciousmuffins3/express-app my-project
+cd my-project
 ```
 
 ### 2. Install Dependencies
@@ -149,6 +168,53 @@ Format your code with Prettier:
 ```bash
 npx prettier --write .
 ```
+
+## Environment Variables
+
+Available environment variables:
+
+| Variable | Description | Default |
+| -------- | ----------- | ------- |
+| `PORT`   | Server port | `3000`  |
+
+## Troubleshooting
+
+### Port Already in Use
+
+If you get an error that the port is already in use, either:
+
+1. Change the `PORT` in your `.env` file
+2. Kill the process using that port:
+   ```bash
+   # Find the process
+   lsof -i :3000
+   # Kill it
+   kill -9 <PID>
+   ```
+
+### Module Not Found
+
+If you encounter module resolution errors:
+
+1. Delete `node_modules/` and `package-lock.json`
+2. Run `npm install` again
+3. Restart your development server
+
+### TypeScript Errors
+
+Ensure your TypeScript version is up to date:
+
+```bash
+npm install typescript@latest --save-dev
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
