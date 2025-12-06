@@ -1,6 +1,6 @@
 # TypeScript Node.js Template
 
-A minimal TypeScript Node.js project template with Express.js, featuring hot-reload development and path aliases.
+A minimal TypeScript Node.js project template with Express.js, featuring hot-reload development, path aliases, and integrated linting.
 
 ## Features
 
@@ -9,6 +9,7 @@ A minimal TypeScript Node.js project template with Express.js, featuring hot-rel
 - 🔥 Hot reload with Nodemon
 - 📁 Path aliases (`@/` for `src/`)
 - 🎨 Prettier for code formatting
+- 🔍 ESLint for code quality and linting
 - 🔐 Environment variable support with dotenv
 
 ## Prerequisites
@@ -96,11 +97,13 @@ npm start
 
 ## Available Scripts
 
-| Script          | Description                              |
-| --------------- | ---------------------------------------- |
-| `npm run dev`   | Start development server with hot reload |
-| `npm run build` | Compile TypeScript to JavaScript         |
-| `npm start`     | Run the production build                 |
+| Script             | Description                              |
+| ------------------ | ---------------------------------------- |
+| `npm run dev`      | Start development server with hot reload |
+| `npm run build`    | Compile TypeScript to JavaScript         |
+| `npm start`        | Run the production build                 |
+| `npm run lint`     | Lint code with ESLint                    |
+| `npm run lint:fix` | Lint and auto-fix issues                 |
 
 ## Project Structure
 
@@ -108,14 +111,15 @@ npm start
 ts-node-template/
 ├── src/
 │   ├── config/
-│   │   └── index.ts        # Configuration management
-│   └── server.ts           # Express server entry point
-├── dist/                   # Compiled JavaScript (generated)
-├── node_modules/           # Dependencies
-├── .env                    # Environment variables (not tracked)
+│   │   └── index.ts       # Configuration management
+│   └── server.ts          # Express server entry point
+├── dist/                  # Compiled JavaScript (generated)
+├── node_modules/          # Dependencies
+├── .env                   # Environment variables (not tracked)
 ├── .gitignore             # Git ignore rules
 ├── .prettierrc            # Prettier configuration
 ├── .prettierignore        # Prettier ignore rules
+├── eslint.config.mjs      # ESLint configuration
 ├── nodemon.json           # Nodemon configuration
 ├── package.json           # Project metadata and dependencies
 ├── tsconfig.json          # TypeScript configuration
@@ -157,16 +161,41 @@ Then import in `server.ts`:
 
 ```typescript
 import userRoutes from '@/routes/users';
-
 app.use('/users', userRoutes);
 ```
 
-## Code Formatting
+## Code Quality Tools
 
-Format your code with Prettier:
+### ESLint
+
+This project uses ESLint with TypeScript support and Prettier integration. The configuration includes:
+
+- TypeScript recommended rules
+- Prettier integration (conflicts disabled)
+- Node.js globals
+
+Lint your code:
 
 ```bash
+# Check for issues
+npm run lint
+
+# Auto-fix issues
+npm run lint:fix
+```
+
+### Prettier
+
+The ESLint configuration automatically runs Prettier and reports formatting issues as linting errors, so running `npm run lint:fix` will format your code.
+
+You can also run Prettier directly if needed:
+
+```bash
+# Format all files
 npx prettier --write .
+
+# Check formatting without modifying files
+npx prettier --check .
 ```
 
 ## Environment Variables
@@ -185,12 +214,14 @@ If you get an error that the port is already in use, either:
 
 1. Change the `PORT` in your `.env` file
 2. Kill the process using that port:
-   ```bash
-   # Find the process
-   lsof -i :3000
-   # Kill it
-   kill -9 <PID>
-   ```
+
+```bash
+# Find the process
+lsof -i :3000
+
+# Kill it
+kill -9 <PID>
+```
 
 ### Module Not Found
 
@@ -208,13 +239,13 @@ Ensure your TypeScript version is up to date:
 npm install typescript@latest --save-dev
 ```
 
-## Contributing
+### ESLint Errors
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+If ESLint reports errors after updating:
+
+1. Clear ESLint cache: `npx eslint --clear-cache`
+2. Restart your editor/IDE
+3. Run `npm run lint:fix` to auto-fix issues
 
 ## License
 
