@@ -19,6 +19,16 @@ Before you begin, ensure you have the following installed:
 - [Node.js](https://nodejs.org/) (v18 or higher recommended)
 - [npm](https://www.npmjs.com/) (comes with Node.js)
 
+### ⚠️ Important: Remove Global TypeScript
+
+If you have TypeScript installed globally, it may conflict with the local project version and cause unexpected behavior. Remove it before starting:
+
+```bash
+npm remove -g typescript
+```
+
+This ensures the project uses the TypeScript version specified in `package.json`, preventing version conflicts and build issues.
+
 ## Quick Start
 
 Use this template to create a new project instantly:
@@ -238,6 +248,42 @@ Ensure your TypeScript version is up to date:
 ```bash
 npm install typescript@latest --save-dev
 ```
+
+**Note:** If you're still experiencing TypeScript issues after updating, verify that you don't have a global TypeScript installation that might be conflicting:
+
+```bash
+# Check if TypeScript is installed globally
+npm list -g typescript
+
+# If it shows a version, remove it
+npm remove -g typescript
+```
+
+### Docker: "tsc: command not found"
+
+If you encounter a `tsc: command not found` error when building in Docker, this is a sign that the global TypeScript installation is interfering with the local one. There are two solutions:
+
+**Solution 1: Remove Global TypeScript (Recommended)**
+
+```bash
+npm remove -g typescript
+```
+
+Then rebuild your Docker image.
+
+**Solution 2: Use Local TypeScript Binary in Dockerfile**
+
+Modify your Dockerfile to use the local TypeScript compiler directly:
+
+```dockerfile
+# Instead of:
+RUN npm run build
+
+# Use:
+RUN ./node_modules/.bin/tsc
+```
+
+This bypasses npm scripts and uses the local TypeScript installation directly.
 
 ### ESLint Errors
 
