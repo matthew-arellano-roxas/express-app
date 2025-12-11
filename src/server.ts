@@ -1,9 +1,12 @@
+import { configDotenv } from 'dotenv';
+configDotenv();
+
 import express from 'express';
-import config from '@/config';
+import { serverConfig } from '@/config';
 
 const app = express();
 
 // Start server
-app.listen(config.PORT, () => {
-  console.log(`Server running at http://localhost:${config.PORT}`);
+app.listen(serverConfig.PORT, () => {
+  console.log(`Server running at http://localhost:${serverConfig.PORT}`);
 });
