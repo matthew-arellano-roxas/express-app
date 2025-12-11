@@ -1,6 +1,4 @@
-import { configDotenv } from 'dotenv';
-configDotenv();
-
+import 'dotenv/config';
 import express from 'express';
 import { serverConfig } from '@/config';
 
