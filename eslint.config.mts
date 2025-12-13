@@ -9,7 +9,7 @@ import prettierConfig from 'eslint-config-prettier';
 
 export default defineConfig([
   {
-    ignores: ["dist/", "build/", "node_modules/"],
+    ignores: ['dist/', 'build/', 'node_modules/', 'generated/', '**/*.d.ts'],
   },
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
@@ -17,7 +17,15 @@ export default defineConfig([
     extends: ['js/recommended'],
     languageOptions: { globals: globals.node },
   },
-
+  {
+    files: ['**/*.ts'],
+    rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_' },
+      ],
+    },
+  },
   { files: ['**/*.js'], languageOptions: { sourceType: 'commonjs' } },
 
   ...tseslint.configs.recommended,
