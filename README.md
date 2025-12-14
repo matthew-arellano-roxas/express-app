@@ -4,13 +4,13 @@ A minimal TypeScript Node.js project template with Express.js, featuring hot-rel
 
 ## Features
 
-- ✨ TypeScript for type safety
-- 🚀 Express.js v5 web framework
-- 🔥 Hot reload with Nodemon
-- 📁 Path aliases (`@/` for `src/`)
-- 🎨 Prettier for code formatting
-- 🔍 ESLint for code quality and linting
-- 🔐 Environment variable support with dotenv
+- TypeScript for type safety
+- Express.js v5 web framework
+- Hot reload with Nodemon
+- Path aliases (`@/` for `src/`)
+- Prettier for code formatting
+- ESLint for code quality and linting
+- Environment variable support with dotenv
 
 ## Prerequisites
 
@@ -19,7 +19,7 @@ Before you begin, ensure you have the following installed:
 - [Node.js](https://nodejs.org/) (v18 or higher recommended)
 - [npm](https://www.npmjs.com/) (comes with Node.js)
 
-### ⚠️ Important: Remove Global TypeScript
+### Important: Remove Global TypeScript
 
 If you have TypeScript installed globally, it may conflict with the local project version and cause unexpected behavior. Remove it before starting:
 
