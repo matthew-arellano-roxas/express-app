@@ -1,10 +1,11 @@
-import 'dotenv/config';
+import { loadEnvironment } from '@/bootstrap';
+loadEnvironment();
+
 import express from 'express';
 import { serverConfig } from '@root/config';
 
 const app = express();
 
-// Start server
 app.listen(serverConfig.PORT, () => {
   console.log(`Server running at http://localhost:${serverConfig.PORT}`);
 });
