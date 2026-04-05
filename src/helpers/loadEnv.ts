@@ -13,7 +13,7 @@ export const loadEnv = () => {
   if (fs.existsSync(envFilePath)) {
     dotenv.config({
       path: envFilePath,
-      override: true,
+      override: false,
     });
   }
 };
