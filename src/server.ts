@@ -1,5 +1,4 @@
-import { loadEnvironment } from '@/helpers/loadEnv';
-loadEnvironment();
+import '@/helpers/loadEnv';
 
 import express from 'express';
 import { env } from '@/config';

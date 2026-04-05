@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import fs from 'fs';
 
-export const loadEnvironment = () => {
+export const loadEnv = () => {
   dotenv.config({
     path: '.env',
     override: false,
@@ -18,4 +18,6 @@ export const loadEnvironment = () => {
   }
 };
 
-export default loadEnvironment;
+loadEnv();
+
+export default loadEnv;
