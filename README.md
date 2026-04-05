@@ -11,23 +11,14 @@ A minimal TypeScript Node.js project template with Express.js, featuring hot-rel
 - Prettier for code formatting
 - ESLint for code quality and linting
 - Environment variable support with dotenv
+- Docker support
 
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
 
-- [Node.js](https://nodejs.org/) (v18 or higher recommended)
+- [Node.js](https://nodejs.org/) (v20 or higher recommended)
 - [npm](https://www.npmjs.com/) (comes with Node.js)
-
-### Important: Remove Global TypeScript
-
-If you have TypeScript installed globally, it may conflict with the local project version and cause unexpected behavior. Remove it before starting:
-
-```bash
-npm remove -g typescript
-```
-
-This ensures the project uses the TypeScript version specified in `package.json`, preventing version conflicts and build issues.
 
 ## Quick Start
 
@@ -65,16 +56,22 @@ npm install
 
 ### 3. Environment Configuration
 
-Create a `.env` file in the root directory (if not already present):
-
-```bash
-cp .env.example .env
-```
-
-Or create it manually with:
+Create a `.env` file in the root directory:
 
 ```env
-PORT=3000
+NODE_ENV=development
+```
+
+Add environment-specific values as needed:
+
+```env
+# .env.development
+PORT=3500
+```
+
+```env
+# .env.production
+PORT=5000
 ```
 
 ### 4. Run the Development Server
@@ -85,7 +82,7 @@ Start the development server with hot reload:
 npm run dev
 ```
 
-The server will start at `http://localhost:3000` (or the port specified in your `.env` file).
+The server will start at `http://localhost:4000` by default, or use the port specified in your environment.
 
 ### 5. Build for Production
 
@@ -117,61 +114,26 @@ npm start
 
 ## Project Structure
 
-```
+```text
 ts-node-template/
 ├── src/
 │   ├── config/
-│   │   └── index.ts       # Configuration management
-│   └── server.ts          # Express server entry point
-├── dist/                  # Compiled JavaScript (generated)
-├── node_modules/          # Dependencies
-├── .env                   # Environment variables (not tracked)
-├── .gitignore             # Git ignore rules
-├── .prettierrc            # Prettier configuration
-├── .prettierignore        # Prettier ignore rules
-├── eslint.config.mjs      # ESLint configuration
-├── nodemon.json           # Nodemon configuration
-├── package.json           # Project metadata and dependencies
-├── tsconfig.json          # TypeScript configuration
-└── README.md              # This file
-```
-
-## Path Aliases
-
-This template uses path aliases for cleaner imports:
-
-```typescript
-// Instead of relative paths
-import config from '../../../config';
-
-// Use path aliases
-import config from '@/config';
-```
-
-The `@/` alias maps to the `src/` directory.
-
-## Adding New Routes
-
-Create route files in `src/routes/`:
-
-```typescript
-// src/routes/users.ts
-import { Router } from 'express';
-
-const router = Router();
-
-router.get('/', (req, res) => {
-  res.json({ message: 'Users route' });
-});
-
-export default router;
-```
-
-Then import in `server.ts`:
-
-```typescript
-import userRoutes from '@/routes/users';
-app.use('/users', userRoutes);
+│   │   ├── env.ts          # Environment configuration
+│   │   └── index.ts        # Config exports
+│   ├── helpers/
+│   │   └── loadEnv.ts      # Environment loader
+│   └── server.ts           # Express server entry point
+├── dist/                   # Compiled JavaScript (generated)
+├── .env                    # Base environment variables (not tracked)
+├── .env.development        # Development environment values (not tracked)
+├── .env.production         # Production environment values (not tracked)
+├── .gitignore              # Git ignore rules
+├── Dockerfile              # Docker image definition
+├── eslint.config.mts       # ESLint configuration
+├── nodemon.json            # Nodemon configuration
+├── package.json            # Project metadata and dependencies
+├── tsconfig.json           # TypeScript configuration
+└── README.md               # This file
 ```
 
 ## Code Quality Tools
@@ -181,7 +143,7 @@ app.use('/users', userRoutes);
 This project uses ESLint with TypeScript support and Prettier integration. The configuration includes:
 
 - TypeScript recommended rules
-- Prettier integration (conflicts disabled)
+- Prettier integration
 - Node.js globals
 
 Lint your code:
@@ -194,44 +156,30 @@ npm run lint
 npm run lint:fix
 ```
 
-### Prettier
-
-The ESLint configuration automatically runs Prettier and reports formatting issues as linting errors, so running `npm run lint:fix` will format your code.
-
-You can also run Prettier directly if needed:
-
-```bash
-# Format all files
-npx prettier --write .
-
-# Check formatting without modifying files
-npx prettier --check .
-```
-
 ## Environment Variables
 
 Available environment variables:
 
-| Variable | Description | Default |
-| -------- | ----------- | ------- |
-| `PORT`   | Server port | `3000`  |
+| Variable   | Description         | Default       |
+| ---------- | ------------------- | ------------- |
+| `PORT`     | Server port         | `4000`        |
+| `NODE_ENV` | Runtime environment | `development` |
 
-## Troubleshooting
+## Docker
 
-### Port Already in Use
-
-If you get an error that the port is already in use, either:
-
-1. Change the `PORT` in your `.env` file
-2. Kill the process using that port:
+Build the image:
 
 ```bash
-# Find the process
-lsof -i :3000
-
-# Kill it
-kill -9 <PID>
+docker build -t my-app .
 ```
+
+Run the container:
+
+```bash
+docker run -p 4000:3000 -e NODE_ENV=production -e PORT=3000 my-app
+```
+
+## Troubleshooting
 
 ### Module Not Found
 
@@ -241,50 +189,6 @@ If you encounter module resolution errors:
 2. Run `npm install` again
 3. Restart your development server
 
-### TypeScript Errors
-
-Ensure your TypeScript version is up to date:
-
-```bash
-npm install typescript@latest --save-dev
-```
-
-**Note:** If you're still experiencing TypeScript issues after updating, verify that you don't have a global TypeScript installation that might be conflicting:
-
-```bash
-# Check if TypeScript is installed globally
-npm list -g typescript
-
-# If it shows a version, remove it
-npm remove -g typescript
-```
-
-### Docker: "tsc: command not found"
-
-If you encounter a `tsc: command not found` error when building in Docker, this is a sign that the global TypeScript installation is interfering with the local one. There are two solutions:
-
-**Solution 1: Remove Global TypeScript (Recommended)**
-
-```bash
-npm remove -g typescript
-```
-
-Then rebuild your Docker image.
-
-**Solution 2: Use Local TypeScript Binary in Dockerfile**
-
-Modify your Dockerfile to use the local TypeScript compiler directly:
-
-```dockerfile
-# Instead of:
-RUN npm run build
-
-# Use:
-RUN ./node_modules/.bin/tsc
-```
-
-This bypasses npm scripts and uses the local TypeScript installation directly.
-
 ### ESLint Errors
 
 If ESLint reports errors after updating:
@@ -292,10 +196,6 @@ If ESLint reports errors after updating:
 1. Clear ESLint cache: `npx eslint --clear-cache`
 2. Restart your editor/IDE
 3. Run `npm run lint:fix` to auto-fix issues
-
-## License
-
-This project is licensed under the Apache-2.0 License.
 
 ## Author
 
