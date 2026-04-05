@@ -1,20 +1,15 @@
 {
+  "extends": "@tsconfig/node20/tsconfig.json",
   "compilerOptions": {
-    "target": "ES6",
-    "module": "commonjs",
-    "rootDir": ".",
-    "baseUrl": "./",
     "outDir": "dist",
-    "removeComments": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
+    "rootDir": "src",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "paths": {
-      "@/*": ["src/*"],
-      "@root/*": ["*"]
+      "@/*": ["./src/*"],
+      "@root/*": ["./*"]
     }
   },
-  "include": ["src/**/*", "config"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

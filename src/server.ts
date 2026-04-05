@@ -1,11 +1,11 @@
-import { loadEnvironment } from '@/bootstrap';
+import { loadEnvironment } from '@/helpers/loadEnv';
 loadEnvironment();
 
 import express from 'express';
-import { serverConfig } from '@root/config';
+import { env } from '@/config';
 
 const app = express();
 
-app.listen(serverConfig.PORT, () => {
-  console.log(`Server running at http://localhost:${serverConfig.PORT}`);
+app.listen(env.PORT, () => {
+  console.log(`Server running at http://localhost:${env.PORT}`);
 });

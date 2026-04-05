@@ -16,6 +16,7 @@
   "type": "commonjs",
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@tsconfig/node20": "^20.1.9",
     "@types/express": "^5.0.5",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
@@ -27,11 +28,11 @@
     "tsc-alias": "^1.8.16",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.48.1"
+    "typescript-eslint": "^8.48.1",
+    "ts-node": "^10.9.2"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
-    "express": "^5.1.0",
-    "ts-node": "^10.9.2"
+    "express": "^5.1.0"
   }
 }
